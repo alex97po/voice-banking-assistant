@@ -48,7 +48,7 @@ export default function AccountCard({ account, index = 0 }) {
         </div>
       </div>
 
-      <div style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.02em', color }}>
+      <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color, whiteSpace: 'nowrap' }}>
         {formatCurrency(account.balance, account.currency)}
       </div>
 

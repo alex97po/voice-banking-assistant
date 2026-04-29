@@ -39,7 +39,8 @@ export default function DashboardPage() {
   }, [loadData]);
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="min-h-screen flex flex-col bg-mesh relative">
+      <div className="glow-overlay" />
       <TopBar
         sttMode={sttMode}
         setSttMode={setSttMode}
@@ -47,11 +48,11 @@ export default function DashboardPage() {
         setTtsMode={setTtsMode}
       />
 
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row lg:overflow-hidden">
         {/* Left panel */}
-        <div className="w-full lg:w-3/5 overflow-y-auto p-4 lg:p-6 flex-shrink-0 lg:flex-shrink">
+        <div className="w-full lg:w-3/5 lg:overflow-y-auto p-4 lg:p-8 flex-shrink-0 lg:flex-shrink">
           {/* Accounts Grid */}
-          <div style={{ marginBottom: 8 }}>
+          <div style={{ marginBottom: 24, marginTop: 24 }}>
             <h2
               style={{
                 fontSize: 13,
@@ -59,7 +60,7 @@ export default function DashboardPage() {
                 color: 'var(--text-muted)',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
-                marginBottom: 14,
+                marginBottom: 16,
               }}
             >
               Accounts
@@ -175,7 +176,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Right panel — Voice Assistant */}
-        <div className="w-full lg:w-2/5 h-[450px] lg:h-auto border-t lg:border-t-0 lg:border-l border-white/10 flex-shrink-0">
+        <div className="w-full lg:w-2/5 h-[500px] lg:h-auto border-t lg:border-t-0 lg:border-l border-white/10 flex-shrink-0">
           <VoiceAssistant
             userId={currentUser}
             sttMode={sttMode}

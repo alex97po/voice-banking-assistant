@@ -6,13 +6,12 @@ export default function LoginPage() {
 
   return (
     <div
+      className="min-h-screen flex flex-col bg-mesh relative"
       style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
         background: 'var(--bg-primary)',
       }}
     >
+      <div className="glow-overlay" />
       {/* Logo bar */}
       <div
         style={{
@@ -44,12 +43,7 @@ export default function LoginPage() {
 
       {/* Main panels */}
       <div
-        style={{
-          flex: 1,
-          display: 'flex',
-          gap: 1,
-          padding: '0 32px 32px',
-        }}
+        className="flex-1 flex flex-col md:flex-row gap-6 p-6 md:p-8 md:pt-0"
       >
         {Object.values(USERS).map((user, idx) => (
           <button
@@ -57,7 +51,8 @@ export default function LoginPage() {
             onClick={() => login(user.id)}
             className="animate-fade-in-up"
             style={{
-              flex: 1,
+              flex: '1 0 auto',
+              minHeight: 180,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -100,15 +95,14 @@ export default function LoginPage() {
 
             {/* Avatar */}
             <div
+              className="w-16 h-16 md:w-20 md:h-20"
               style={{
-                width: 88,
-                height: 88,
-                borderRadius: 24,
+                borderRadius: 20,
                 background: user.gradient,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: 28,
+                fontSize: 24,
                 fontWeight: 800,
                 color: 'white',
                 boxShadow: `0 8px 32px ${idx === 0 ? 'rgba(14, 165, 233, 0.2)' : 'rgba(124, 58, 237, 0.2)'}`,
@@ -120,22 +114,21 @@ export default function LoginPage() {
             {/* Name */}
             <div style={{ textAlign: 'center', zIndex: 1 }}>
               <div
+                className="text-lg md:text-xl"
                 style={{
-                  fontSize: 22,
                   fontWeight: 700,
                   color: 'var(--text-primary)',
-                  marginBottom: 4,
+                  marginBottom: 2,
                 }}
               >
                 {user.name}
               </div>
               <div
-                className="text-rtl"
+                className="text-rtl text-sm md:text-base"
                 style={{
-                  fontSize: 18,
                   color: 'var(--text-secondary)',
                   fontFamily: 'var(--font-arabic)',
-                  marginBottom: 12,
+                  marginBottom: 8,
                 }}
               >
                 {user.nameAr}
@@ -144,7 +137,7 @@ export default function LoginPage() {
                 style={{
                   fontSize: 13,
                   color: 'var(--text-muted)',
-                  marginBottom: 4,
+                  marginBottom: 16,
                 }}
               >
                 {user.subtitle}
@@ -172,8 +165,8 @@ export default function LoginPage() {
         ))}
       </div>
 
-      {/* Footer */}
       <div
+        className="relative z-10"
         style={{
           padding: '16px 32px',
           textAlign: 'center',
