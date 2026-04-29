@@ -14,7 +14,7 @@ export default function DashboardPage() {
   const [cards, setCards] = useState([]);
   const [beneficiaries, setBeneficiaries] = useState([]);
   const [sttMode, setSttMode] = useState('accurate');
-  const [ttsMode, setTtsMode] = useState('browser');
+  const [ttsMode, setTtsMode] = useState('elevenlabs');
 
   const loadData = useCallback(async () => {
     if (!currentUser) return;
