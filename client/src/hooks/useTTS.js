@@ -12,6 +12,7 @@ export function useTTS() {
       audioRef.current = null;
     }
 
+    console.log('[useTTS] speak called:', { text: text.slice(0, 20), language, useElevenLabs });
     if (useElevenLabs) {
       try {
         const audioBlob = await synthesizeSpeech(text, language);

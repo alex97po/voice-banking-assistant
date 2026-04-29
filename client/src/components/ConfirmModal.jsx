@@ -1,4 +1,4 @@
-export default function ConfirmModal({ pendingAction, onAuthorize, onCancel }) {
+export default function ConfirmModal({ pendingAction, onAuthorize, onCancel, isProcessing }) {
   if (!pendingAction) return null;
 
   return (
@@ -75,6 +75,7 @@ export default function ConfirmModal({ pendingAction, onAuthorize, onCancel }) {
         <div style={{ display: 'flex', gap: 12 }}>
           <button
             onClick={onCancel}
+            disabled={isProcessing}
             style={{
               flex: 1,
               padding: '12px 20px',
@@ -84,9 +85,10 @@ export default function ConfirmModal({ pendingAction, onAuthorize, onCancel }) {
               color: 'var(--text-secondary)',
               fontSize: 14,
               fontWeight: 600,
-              cursor: 'pointer',
+              cursor: isProcessing ? 'default' : 'pointer',
               transition: 'all 0.2s',
               fontFamily: 'var(--font-sans)',
+              opacity: isProcessing ? 0.5 : 1,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.borderColor = 'var(--text-secondary)';
@@ -99,6 +101,7 @@ export default function ConfirmModal({ pendingAction, onAuthorize, onCancel }) {
           </button>
           <button
             onClick={onAuthorize}
+            disabled={isProcessing}
             style={{
               flex: 1,
               padding: '12px 20px',
@@ -108,21 +111,35 @@ export default function ConfirmModal({ pendingAction, onAuthorize, onCancel }) {
               color: 'white',
               fontSize: 14,
               fontWeight: 600,
-              cursor: 'pointer',
+              cursor: isProcessing ? 'default' : 'pointer',
               transition: 'all 0.2s',
               fontFamily: 'var(--font-sans)',
-              boxShadow: '0 4px 16px rgba(245, 158, 11, 0.3)',
+              boxShadow: isProcessing ? 'none' : '0 4px 16px rgba(245, 158, 11, 0.3)',
+              opacity: isProcessing ? 0.8 : 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8,
             }}
             onMouseEnter={(e) => {
+              if (isProcessing) return;
               e.currentTarget.style.transform = 'translateY(-1px)';
               e.currentTarget.style.boxShadow = '0 6px 20px rgba(245, 158, 11, 0.4)';
             }}
             onMouseLeave={(e) => {
+              if (isProcessing) return;
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.boxShadow = '0 4px 16px rgba(245, 158, 11, 0.3)';
             }}
           >
-            Authorize
+            {isProcessing ? (
+              <>
+                <div className="button-loader" />
+                Processing...
+              </>
+            ) : (
+              'Authorize'
+            )}
           </button>
         </div>
       </div>

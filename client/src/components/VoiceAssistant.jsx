@@ -8,6 +8,7 @@ import Waveform from './Waveform';
 import ConfirmModal from './ConfirmModal';
 
 export default function VoiceAssistant({ userId, sttMode, ttsMode, onDataChange }) {
+  console.log('[VoiceAssistant] Render:', { sttMode, ttsMode });
   const [messages, setMessages] = useState([]);
   const [chatHistory, setChatHistory] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -273,6 +274,7 @@ export default function VoiceAssistant({ userId, sttMode, ttsMode, onDataChange 
         pendingAction={pendingAction}
         onAuthorize={handleAuthorize}
         onCancel={handleCancel}
+        isProcessing={isProcessing}
       />
     </>
   );

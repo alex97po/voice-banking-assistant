@@ -39,7 +39,7 @@ export default function DashboardPage() {
   }, [loadData]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-mesh relative">
+    <div className="min-h-screen lg:h-screen flex flex-col bg-mesh relative lg:overflow-hidden">
       <div className="glow-overlay" />
       <TopBar
         sttMode={sttMode}
@@ -68,7 +68,7 @@ export default function DashboardPage() {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
                 gap: 14,
               }}
             >

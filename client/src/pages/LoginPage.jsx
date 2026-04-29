@@ -6,7 +6,7 @@ export default function LoginPage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-mesh relative"
+      className="min-h-screen lg:h-screen flex flex-col bg-mesh relative lg:overflow-hidden"
       style={{
         background: 'var(--bg-primary)',
       }}
