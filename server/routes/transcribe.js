@@ -34,7 +34,7 @@ router.post('/', upload.single('audio'), async (req, res) => {
     });
 
     // Clean up temp file
-    fs.unlinkSync(filePath);
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
 
     // Detect language (simple heuristic — Arabic characters)
     const hasArabic = /[\u0600-\u06FF]/.test(transcription.text);
@@ -42,10 +42,14 @@ router.post('/', upload.single('audio'), async (req, res) => {
 
     res.json({ text: transcription.text, language });
   } catch (error) {
-    console.error('[STT Error]', error.message);
-    // Clean up temp files on error
-    try { fs.unlinkSync(req.file.path); } catch {}
-    try { fs.unlinkSync(req.file.path + '.webm'); } catch {}
+    console.error('[STT Error]', error.response?.data || error.message);
+    // Clean up all possible temp files on error
+    try { if (req.file?.path && fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path); } catch {}
+    // The filePath might have been created
+    const ext = req.file?.originalname?.split('.').pop() || 'webm';
+    const filePath = req.file ? req.file.path + '.' + ext : null;
+    try { if (filePath && fs.existsSync(filePath)) fs.unlinkSync(filePath); } catch {}
+    
     res.status(500).json({ error: 'Transcription failed', details: error.message });
   }
 });

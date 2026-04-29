@@ -2,7 +2,19 @@ const BASE = '/api';
 
 export async function transcribeAudio(audioBlob, mode = 'accurate') {
   const formData = new FormData();
-  const ext = audioBlob.type.includes('mp4') ? 'm4a' : 'webm';
+  
+  // Robust extension detection for Whisper
+  let ext = 'webm';
+  if (audioBlob.type.includes('mp4') || audioBlob.type.includes('m4a')) {
+    ext = 'm4a';
+  } else if (audioBlob.type.includes('wav')) {
+    ext = 'wav';
+  } else if (audioBlob.type.includes('ogg')) {
+    ext = 'ogg';
+  } else if (audioBlob.type.includes('mpeg') || audioBlob.type.includes('mp3')) {
+    ext = 'mp3';
+  }
+  
   formData.append('audio', audioBlob, `recording.${ext}`);
 
   const res = await fetch(`${BASE}/transcribe?mode=${mode}`, {

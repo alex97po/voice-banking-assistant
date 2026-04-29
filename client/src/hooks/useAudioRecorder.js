@@ -20,11 +20,15 @@ export function useAudioRecorder() {
       source.connect(analyser);
       analyserRef.current = analyser;
 
-      const mediaRecorder = new MediaRecorder(stream, {
+      const options = {
         mimeType: MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
           ? 'audio/webm;codecs=opus'
-          : 'audio/webm',
-      });
+          : MediaRecorder.isTypeSupported('audio/mp4')
+          ? 'audio/mp4'
+          : '',
+      };
+      // If the mimeType string is empty, MediaRecorder will use the browser's default.
+      const mediaRecorder = options.mimeType ? new MediaRecorder(stream, options) : new MediaRecorder(stream);
 
       chunksRef.current = [];
       mediaRecorder.ondataavailable = (e) => {
@@ -32,7 +36,7 @@ export function useAudioRecorder() {
       };
 
       mediaRecorderRef.current = mediaRecorder;
-      mediaRecorder.start(100); // collect in 100ms chunks
+      mediaRecorder.start(); // do not use timeslice, causes corruption on Safari
       setIsRecording(true);
     } catch (err) {
       console.error('Failed to start recording:', err);
@@ -49,7 +53,8 @@ export function useAudioRecorder() {
       }
 
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
+        const actualMimeType = mediaRecorder.mimeType || 'audio/webm';
+        const blob = new Blob(chunksRef.current, { type: actualMimeType });
         chunksRef.current = [];
         setIsRecording(false);
 
